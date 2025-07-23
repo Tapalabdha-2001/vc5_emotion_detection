@@ -4,7 +4,7 @@ import os
 import yaml
 import logging
 from typing import Tuple
-from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.feature_extraction.text import TfidfVectorizer
 
 # Configure logging
 logging.basicConfig(
@@ -42,9 +42,9 @@ def extract_features_labels(df: pd.DataFrame) -> Tuple[np.ndarray, np.ndarray]:
         logging.error(f"Failed to extract features/labels: {e}")
         raise
 
-def vectorize_data(X_train: np.ndarray, X_test: np.ndarray, max_features: int) -> Tuple[np.ndarray, np.ndarray, CountVectorizer]:
+def vectorize_data(X_train: np.ndarray, X_test: np.ndarray, max_features: int) -> Tuple[np.ndarray, np.ndarray, TfidfVectorizer]:
     try:
-        vectorizer = CountVectorizer(max_features=max_features)
+        vectorizer = TfidfVectorizer(max_features=max_features)
         X_train_bow = vectorizer.fit_transform(X_train)
         X_test_bow = vectorizer.transform(X_test)
         logging.info("Data vectorization completed")
